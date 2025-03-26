@@ -31,7 +31,7 @@ export default [
     },
 
 {
-        id: 1,
+        id: 4,
         name: "H3M Restaurant",
         description: "web application for a restaurant, menu and ordering",
         status: "complete",
@@ -41,7 +41,7 @@ export default [
 
     },
     {
-        id: 2,
+        id: 5,
         name: "Portfolio",
         description: "a dark theme portfolio with main sections and images, plus downloading cv button",
         status: "complete",

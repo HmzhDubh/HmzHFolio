@@ -1,18 +1,9 @@
-import { useState } from 'react'
-import Header from './components/Header'
-import MainContent from './components/MainContent'
-
+import HomePage from './pages/HomePage.jsx'
 import './App.css'
 
-function App() {
+export default function App() {
 
-
-  return (
-    <>
-      <Header />
-      <MainContent />
-    </>
-  )
+    return (
+        <HomePage />
+    )
 }
-
-export default App

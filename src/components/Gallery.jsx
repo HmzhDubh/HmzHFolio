@@ -3,7 +3,7 @@ import imagesList from '../assets/photosList'
 export default function Gallery(){
     const imagesElements = imagesList.map(img => {
         return(
-            <img id={img.id} src={img.url} width="300" height="600"></img>
+            <img key={img.id} src={img.url} width="300" height="600"></img>
         )})
 
     return(
