@@ -4,14 +4,14 @@ export default [
         name: "H3M Restaurant",
         description: "web application for a restaurant, menu and ordering",
         status: "complete",
-        image: "https://hmzhfolio.up.railway.app/media/images/m3hRest.png",
+        image: "",
         type: "web application",
-        link: "http://hmzhdubh.me/CPIT-405/final-project/project-index.html",
+        link: "",
 
     },
     {
         id: 2,
-        name: "Portfolio",
+        name: "My Portfolio",
         description: "a dark theme portfolio with main sections and images, plus downloading cv button",
         status: "complete",
         image: "https://hmzhfolio.up.railway.app/media/images/port.png",

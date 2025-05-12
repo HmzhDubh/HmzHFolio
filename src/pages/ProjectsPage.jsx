@@ -43,7 +43,7 @@ export default function Project(){
     })
     return (
         <div className="filter drop-shadow-lg mt-32 text-center">
-            <h1 className="text-red-500 text-6xl font-black mb-10">My Projects</h1>
+            <h1 className="text-red-500 text-6xl font-black mb-10">Projects</h1>
             <div className="flex flex-wrap justify-center gap-16 p-4 sm:p-8">{projectsCards}</div>
         </div>
     )
