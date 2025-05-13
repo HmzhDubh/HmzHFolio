@@ -8,14 +8,18 @@
 ## Upcoming Upgrades to the page
 
 - Add About me Page 
-  - Main component 
-  - Tools stack component
-  - Skills component
+  - Main component #DONE 
+  - Tools stack component #DONE
+  - Skills component #DONE
   - contact component
-- Add Footer Component
+- Add Footer Component #DONE
+- configure React Router to rout between pages #DONE
+
 - Transform the application from static to an interactive page for CRUD operations on certain data
 - Add an admin dashboard to access projects, photos, tools stack, and skills
-- configure React Router to rout between pages
+- fix projects, and projects details page #DONE
+- fix gallery, page #DONE
+
 
 ## Wireframes
 ![main](./src/assets/mainhead.png)

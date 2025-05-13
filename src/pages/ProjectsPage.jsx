@@ -1,16 +1,17 @@
 import {Link} from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { getProjects } from '../firebaseConf.js'
 
 export default function Project(){
 
     const [projects, setProjects] = useState([])
 
     useEffect( ()  => {
-        fetch('/database/projects')
-            .then( res => res.json() )
-            .then( data => setProjects(data.projects) )
-
-
+        async function fetchData(){
+            const data = await getProjects()
+            setProjects(data)
+        }
+        fetchData()
     }, [])
 
     const projectsCards = projects.map(project => {

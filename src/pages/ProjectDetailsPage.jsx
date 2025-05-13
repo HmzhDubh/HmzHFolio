@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import { getProject } from '../firebaseConf.js'
 
 export default function ProjectDetailsPage(){
     const params = useParams()
     const [project, setProject] = useState({})
 
     useEffect( () => {
-        fetch(`/database/projects/${params.id}`)
-            .then( res => res.json() )
-            .then( data => setProject(data.projects))
+        async function fetchProject(){
+            const project = await getProject(params.id)
+            console.log(project)
+            setProject(project)
+        }
+        fetchProject()
     }, [] )
 
     return(
@@ -19,7 +23,7 @@ export default function ProjectDetailsPage(){
 
                 <img className="w-80" src={project.image}></img>
                 <div>
-                    <h1 className="text-4xl"> {project.name} </h1>
+                    <h1 className="text-4xl"> {project.title} </h1>
                     <h1> {project.description} </h1>
                     <h1> {project.status} </h1>
                     <h1> {project.type} </h1>

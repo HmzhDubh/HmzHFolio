@@ -34,7 +34,7 @@ export default function Footer() {
                                     </div>
                                     <div className="">
                                         <h5 className="text-2xl font-bold mb-2">Contact Us</h5>
-                                        <p><a href="{% url 'main:contact_view' %}">Send me a message</a></p>
+                                        <p><a href="/contact">Send me a message</a></p>
 
 
                                     </div>

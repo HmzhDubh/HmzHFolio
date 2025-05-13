@@ -15,7 +15,7 @@ export default function Header(){
                         <Link to="/gallery">Gallery</Link >
                         <li></li>
                     </ul>
-                    <button className='px-5 py-3 mt-1 bg-red-600 rounded-3xl text-indigo-200'>Contact</button>
+                    <Link to="/contact" className='px-5 py-3 mt-1 bg-red-600 rounded-3xl text-indigo-200'>Contact</Link>
                 </nav>
             </div>
             </header>

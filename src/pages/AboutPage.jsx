@@ -1,7 +1,4 @@
 import { useState, useEffect } from 'react'
-
-import experienceList from '../assets/experienceList.js'
-import techStackList from '../assets/techStack.js'
 import { getExperience, getTechStack } from '../firebaseConf.js'
 
 export default function AboutPage(){
@@ -27,13 +24,13 @@ export default function AboutPage(){
 
     const experienceListItems = experience.map( item => {
         return(
-            <li>{item.domain} {item.progress}%</li>
+            <li key={item.id} >{item.domain} {item.progress}%</li>
 
         )
     })
     const techStackItems = techStack.map( (item) => {
         return(
-            <li style={{ color: item.colorCode }} className={`rounded-3xl p-2 items-center`}>{item.tool}</li>
+            <li key={item.id} style={{ color: item.colorCode }} className={`rounded-3xl p-2 items-center`}>{item.tool}</li>
         )
     })
     return(

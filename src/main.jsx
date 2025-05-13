@@ -8,6 +8,7 @@ import Layout from './components/Layout.jsx'
 import DashboardLayout from './components/DashboardLayout.jsx'
 import HomePage from './pages/HomePage.jsx'
 import ProjectsPage from './pages/ProjectsPage.jsx'
+import Contact from './pages/ContactPage.jsx'
 import ProjectDetailsPage from './pages/ProjectDetailsPage.jsx'
 import AboutPage from './pages/AboutPage.jsx'
 import GalleryPage from './pages/GalleryPage.jsx'
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
             { path: '/projects/:id', element: <ProjectDetailsPage />, },
             { path: 'about', element: <AboutPage />, },
             { path: 'gallery', element: <GalleryPage />, },
+            { path: 'contact', element: <Contact />, },
             { path: 'dashboard', element: <DashboardLayout />,
                 children:[
                     { index: true, element: <ProjectsDashboardPage /> },

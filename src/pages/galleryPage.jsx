@@ -1,5 +1,17 @@
-import images from '../assets/photosList.js'
+import { useState, useEffect } from 'react'
+import { getPhotos } from '../firebaseConf.js'
+
 export default function galleryPage(){
+    const [images, setImages] = useState([])
+            useEffect(() => {
+                async function fetchData() {
+                  const data = await getPhotos();
+
+                  setImages(data);
+                }
+
+                fetchData();
+            }, []);
     const imagesElems = images.map( img => {
         return (
             <img key={img.id} src={img.url} width="300" height="600"></img>
