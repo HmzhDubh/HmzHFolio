@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
-import { getProjects } from '../../firebaseConf.js'
+import { getProjects, deleteProject } from '../../firebaseConf.js'
 import AddProject from '../../components/dashboardComponents/AddProject.jsx'
 export default function ProjectsDashboard(){
 
     const [ projects, setProjects ] = useState([])
     const [showModal, setShowModal] = useState(false);
+    const [ deleteResponse , setDeleteResponse] = useState("")
+
 
     useEffect( () => {
         async function fetchData(){
@@ -13,9 +15,16 @@ export default function ProjectsDashboard(){
         }
         fetchData()
     }, [])
+    function handleDelete(projectId){
+
+        const res = deleteProject(projectId)
+        console.log(res)
+        setDeleteResponse(res)
+    }
+
     const projectRows = projects?.map( (project) => {
         return (
-            <tr className="hover:bg-gray-50">
+            <tr key={project.id} className="hover:bg-gray-50">
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{project.title}</td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{project.description}</td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{project.status}</td>
@@ -27,13 +36,15 @@ export default function ProjectsDashboard(){
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                 <a href="#" className="text-indigo-600 hover:text-indigo-900 mr-4">Edit</a>
-                <a href="#" className="text-red-600 hover:text-red-900">Delete</a>
+                <button onClick={() => handleDelete(project.id)} className="text-red-600 hover:text-red-900">Delete</button>
               </td>
             </tr>
         )
     } )
+
     return(
         <>
+            {deleteResponse && <div className="text-center bg-yellow-300 p-2 m-2 rounded-lg">{deleteResponse}</div>}
              {showModal && (
                     <div
                       className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center w-full h-screen bg-black bg-opacity-50"
@@ -78,6 +89,7 @@ export default function ProjectsDashboard(){
                       </div>
                     </div>
                   )}
+
             <div className="flex justify-between items-start">
                 <h1 className="text-left text-3xl pb-10 font-semibold">Projects Dashboard</h1>
                 <button onClick={() => setShowModal(true)} className="bg-red-600 p-1 rounded-lg text-white">+ New Project</button>

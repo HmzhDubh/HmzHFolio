@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
-import { getTechStack } from '../../firebaseConf.js'
+import { getTechStack, deleteTool } from '../../firebaseConf.js'
 import AddTechStack from '../../components/dashboardComponents/AddTechStack.jsx'
 
 export default function TechStackDashboard(){
 
     const [ techStack, setTechStack ] = useState([])
     const [showModal, setShowModal] = useState(false);
+    const [ deleteResponse , setDeleteResponse] = useState("")
 
     useEffect(() => {
         async function fetchData(){
@@ -14,7 +15,12 @@ export default function TechStackDashboard(){
         }
     fetchData()
     },[])
+    function handleDelete(toolId){
 
+            const res = deleteTool(toolId)
+            console.log(res)
+            setDeleteResponse(res)
+        }
     const techStackRows = techStack?.map((tool) => {
         return(
             <tr key={tool.id} className="hover:bg-gray-50">
@@ -22,13 +28,14 @@ export default function TechStackDashboard(){
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{tool.colorCode}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <a href="#" className="text-indigo-600 hover:text-indigo-900 mr-4">Edit</a>
-                    <a href="#" className="text-red-600 hover:text-red-900">Delete</a>
+                    <button onClick={() => handleDelete(tool.id)} className="text-red-600 hover:text-red-900">Delete</button>
                 </td>
             </tr>
         )
     })
     return(
         <>
+        {deleteResponse && <div className="text-center bg-yellow-300 p-2 m-2 rounded-lg">{deleteResponse}</div>}
         {showModal && (
             <div
               className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center w-full h-screen bg-black bg-opacity-50"

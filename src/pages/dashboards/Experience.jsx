@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
-import { getExperience } from '../../firebaseConf.js'
+import { getExperience, deleteExperience } from '../../firebaseConf.js'
 import AddExperience from '../../components/dashboardComponents/AddExperience.jsx'
 
 export default function ExperienceDashboard(){
 
     const [ experience, setExperience ] = useState([])
     const [showModal, setShowModal] = useState(false);
+    const [ deleteResponse , setDeleteResponse] = useState("")
 
     useEffect( () => {
         async function fetchData(){
@@ -14,6 +15,13 @@ export default function ExperienceDashboard(){
         }
         fetchData()
     },[])
+
+    function handleDelete(experienceId){
+
+            const res = deleteExperience(experienceId)
+            console.log(res)
+            setDeleteResponse(res)
+        }
     const experienceRows = experience?.map((exp) => {
 
         return(
@@ -22,13 +30,14 @@ export default function ExperienceDashboard(){
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{exp.progress}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                 <a href="#" className="text-indigo-600 hover:text-indigo-900 mr-4">Edit</a>
-                <a href="#" className="text-red-600 hover:text-red-900">Delete</a>
+                <button onClick={() => handleDelete(exp.id)} href="#" className="text-red-600 hover:text-red-900">Delete</button>
                 </td>
             </tr>
         )
     })
     return(
         <>
+            {deleteResponse && <div className="text-center bg-yellow-300 p-2 m-2 rounded-lg">{deleteResponse}</div>}
             {showModal && (
                 <div
                   className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center w-full h-screen bg-black bg-opacity-50"
@@ -74,6 +83,7 @@ export default function ExperienceDashboard(){
                 </div>
               )}
             <div className="flex justify-between items-start">
+
                 <h1 className="text-left text-3xl pb-10 font-semibold">Experience Dashboard</h1>
                 <button onClick={() => setShowModal(true)} className="bg-red-600 p-1 rounded-lg text-white">+ New Experience</button>
 

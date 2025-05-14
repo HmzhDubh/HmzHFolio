@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
-import { getPhotos } from '../../firebaseConf.js'
+import { getPhotos, deletePhoto } from '../../firebaseConf.js'
 import AddPhoto from '../../components/dashboardComponents/AddPhoto.jsx'
 
 export default function PhotosDashboard(){
 
     const [ photos, setPhotos ] = useState([])
     const [showModal, setShowModal] = useState(false);
+    const [ deleteResponse , setDeleteResponse] = useState("")
 
     useEffect( () => {
         async function fetchData(){
@@ -14,6 +15,13 @@ export default function PhotosDashboard(){
         }
         fetchData()
     }, [])
+
+    function handleDelete(photoId){
+
+            const res = deletePhoto(photoId)
+            console.log(res)
+            setDeleteResponse(res)
+        }
     const photosRows = photos?.map( (photo) => {
         return(
             <tr key={photo.id} className="hover:bg-gray-50">
@@ -25,7 +33,7 @@ export default function PhotosDashboard(){
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <a href="#" className="text-indigo-600 hover:text-indigo-900 mr-4">Edit</a>
-                    <a href="#" className="text-red-600 hover:text-red-900">Delete</a>
+                    <button onClick={() => handleDelete(photo.id)} className="text-red-600 hover:text-red-900">Delete</button>
                 </td>
             </tr>
         )
@@ -65,6 +73,7 @@ export default function PhotosDashboard(){
               </div>
             </div>
           )}
+        {deleteResponse && <div className="text-center bg-yellow-300 p-2 m-2 rounded-lg">{deleteResponse}</div>}
         <div className="flex justify-between items-start">
             <h1 className="text-left text-3xl pb-10 font-semibold">Photos Dashboard</h1>
             <button onClick={() => setShowModal(true)} className="bg-red-600 p-1 rounded-lg text-white">+ New Photo</button>

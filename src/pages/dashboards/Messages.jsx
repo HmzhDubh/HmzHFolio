@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
-import { getMessages } from '../../firebaseConf.js'
+import { getMessages, deleteMessage } from '../../firebaseConf.js'
 
 export default function MessagesDashboard(){
     const [ messages, setMessages ] = useState([])
+    const [ deleteResponse , setDeleteResponse] = useState("")
     useEffect(() => {
         async function fetchData(){
             const data = await getMessages()
@@ -10,21 +11,29 @@ export default function MessagesDashboard(){
         }
         fetchData()
     }, [])
+
+    function handleDelete(messageId){
+
+            const res = deleteMessage(messageId)
+            console.log(res)
+            setDeleteResponse(res)
+        }
     const messagesRows = messages?.map( msg => {
         return(
-            <tr className="hover:bg-gray-50">
+            <tr key={msg.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{msg.email}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{msg.name}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{msg.message}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                 <a href="#" className="text-indigo-600 hover:text-indigo-900 mr-4">Edit</a>
-                <a href="#" className="text-red-600 hover:text-red-900">Delete</a>
+                <button onClick={() => handleDelete(msg.id)} className="text-red-600 hover:text-red-900">Delete</button>
                 </td>
             </tr>
         )
     })
     return(
         <>
+        {deleteResponse && <div className="text-center bg-yellow-300 p-2 m-2 rounded-lg">{deleteResponse}</div>}
         <h1 className="text-left text-3xl pb-10 font-semibold">Messages Dashboard</h1>
         <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
