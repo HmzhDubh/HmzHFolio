@@ -24,13 +24,17 @@ export default function AboutPage(){
 
     const experienceListItems = experience.map( item => {
         return(
-            <li key={item.id} >{item.domain} {item.progress}%</li>
+            <li key={item.id} >{item.domain}
+                <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                    <div className="bg-indigo-800 text-xs font-medium text-indigo-100 text-center p-0.5 mt-1 leading-none rounded-full" style = {{width: item.progress}}> {item.progress}%</div>
+                  </div>
+            </li>
 
         )
     })
     const techStackItems = techStack.map( (item) => {
         return(
-            <li key={item.id} style={{ color: item.colorCode }} className={`rounded-3xl p-2 items-center`}>{item.tool}</li>
+            <li key={item.id} style={{ backgroundColor: item.colorCode }} className={`rounded-full p-2 items-center text-white`}>{item.tool}</li>
         )
     })
     return(
@@ -43,7 +47,7 @@ export default function AboutPage(){
                     <a href="#about_me">About Me</a>
                     <a href="#skills">Skills</a>
                     <a href="#tech_stack">Technical Stack</a>
-                    <a href="#contacts">Contacts</a>
+                    <a href="/contact">Contacts</a>
 
                 </div>
             </div>

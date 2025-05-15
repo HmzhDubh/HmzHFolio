@@ -12,7 +12,7 @@ export default function MainHead(){
                         <h1>Programmer</h1>
                         <h1>Photographer</h1>
                     </div>
-                    <a href="#about-me" className="px-5 py-3 bg-red-500 rounded-full text-indigo-200">Read About Me</a>
+                    <a href="/about" className="px-5 py-3 bg-red-500 rounded-full text-indigo-200">Read About Me</a>
                 </div>
 
                 <div>

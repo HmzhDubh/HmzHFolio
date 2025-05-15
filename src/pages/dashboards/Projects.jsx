@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
 import { getProjects, deleteProject } from '../../firebaseConf.js'
 import AddProject from '../../components/dashboardComponents/AddProject.jsx'
+import UpdateProject from '../../components/dashboardComponents/UpdateProject.jsx'
 export default function ProjectsDashboard(){
 
     const [ projects, setProjects ] = useState([])
     const [showModal, setShowModal] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
     const [ deleteResponse , setDeleteResponse] = useState("")
 
 
@@ -24,28 +26,67 @@ export default function ProjectsDashboard(){
 
     const projectRows = projects?.map( (project) => {
         return (
-            <tr key={project.id} className="hover:bg-gray-50">
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{project.title}</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{project.description}</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{project.status}</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-600 hover:underline">
-                <a href={project.link} target="_blank">Visit</a>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                <img src={project.image} alt="Project" className="h-10 w-10 rounded-full" />
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                <a href="#" className="text-indigo-600 hover:text-indigo-900 mr-4">Edit</a>
-                <button onClick={() => handleDelete(project.id)} className="text-red-600 hover:text-red-900">Delete</button>
-              </td>
-            </tr>
+            <>
+                <tr className="hover:bg-gray-50">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{project.title}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{project.description}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{project.status}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-600 hover:underline">
+                    <a href={project.link} target="_blank">Visit</a>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <img src={project.image} alt="Project" className="h-10 w-10 rounded-full" />
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <button onClick={() => setShowEditModal(true)} className="text-indigo-600 hover:text-indigo-900 mr-4">Edit</button>
+                    <button onClick={() => handleDelete(project.id)} className="text-red-600 hover:text-red-900">Delete</button>
+                  </td>
+                </tr>
+                {showEditModal && (
+                    <div
+                        key={project.id}
+                        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center w-full h-screen bg-black bg-opacity-50"
+                        role="dialog"
+                        aria-modal="true"
+                        >
+                    <div className="relative p-4 w-full max-w-2xl max-h-full">
+                        <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                            {/* Header */}
+                            <div className="flex items-center justify-between p-4 md:p-5 border-b border-gray-200 dark:border-gray-600 rounded-t">
+                                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                                    Update Project
+                                </h3>
+                                <button
+                                    onClick={() => setShowEditModal(false)}
+                                    className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                >
+                                    <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                         <path stroke="currentColor" strokeLineCap="round" strokeLineJoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                    </svg>
+                                    <span className="sr-only">Close modal</span>
+                                </button>
+                            </div>
+                                {/* Body */}
+                                <UpdateProject
+                                    projectId = {project.id}
+                                    title = {project.title}
+                                    description = {project.description}
+                                    status = {project.status}
+                                    link = {project.link}
+                                    image = {project.image}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                )}
+                </>
         )
     } )
 
     return(
         <>
             {deleteResponse && <div className="text-center bg-yellow-300 p-2 m-2 rounded-lg">{deleteResponse}</div>}
-             {showModal && (
+            {showModal && (
                     <div
                       className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center w-full h-screen bg-black bg-opacity-50"
                       role="dialog"
@@ -56,26 +97,14 @@ export default function ProjectsDashboard(){
                           {/* Header */}
                           <div className="flex items-center justify-between p-4 md:p-5 border-b border-gray-200 dark:border-gray-600 rounded-t">
                             <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                              Terms of Service
+                              New Project
                             </h3>
                             <button
                               onClick={() => setShowModal(false)}
                               className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                             >
-                              <svg
-                                className="w-3 h-3"
-                                aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 14 14"
-                              >
-                                <path
-                                  stroke="currentColor"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth="2"
-                                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                                />
+                              <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                <path stroke="currentColor" strokeLineCap="round" strokeLineJoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                               </svg>
                               <span className="sr-only">Close modal</span>
                             </button>
